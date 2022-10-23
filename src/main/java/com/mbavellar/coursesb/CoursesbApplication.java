@@ -8,13 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mbavellar.coursesb.domain.Category;
+import com.mbavellar.coursesb.domain.Product;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
+import com.mbavellar.coursesb.repositories.ProductRepository;
 
 @SpringBootApplication
 public class CoursesbApplication implements CommandLineRunner {
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
+	@Autowired
+	private ProductRepository productRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CoursesbApplication.class, args);
@@ -25,9 +29,20 @@ public class CoursesbApplication implements CommandLineRunner {
 		
 		Category cat1 = new Category(null, "IT");
 		Category cat2 = new Category(null, "Office");
+		
+		Product p1 = new Product(null, "Computer", 2000.0);
+		Product p2 = new Product(null, "Printer", 800.0);
+		Product p3 = new Product(null, "Mouse", 80.0);
+		
+		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
+		cat2.getProducts().add(p2);
+		
+		p1.getCategories().add(cat1);
+		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategories().add(cat1);
+		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
-		
-		
+		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 	}
 
 }

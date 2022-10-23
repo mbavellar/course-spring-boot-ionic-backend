@@ -1,6 +1,5 @@
 package com.mbavellar.coursesb.resources;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +18,13 @@ public class CategoryResource {
   private CategoryService categoryService;
 	
   @RequestMapping(value="/{id}", method = RequestMethod.GET)
-  public ResponseEntity<?> test(@PathVariable Integer id) {
+  public ResponseEntity<?> findById(@PathVariable Integer id) {
 	  Category category = categoryService.findById(id);
 	  return ResponseEntity.ok().body(category);
+  }
+  
+  @RequestMapping(method = RequestMethod.GET)
+  public ResponseEntity<?> findAll() {
+	  return ResponseEntity.ok().body(categoryService.findAll());
   }
 }

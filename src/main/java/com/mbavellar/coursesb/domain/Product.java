@@ -9,34 +9,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+
 @Entity
-public class Category implements Serializable{
+public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private Double price;
 	
-	@ManyToMany(mappedBy = "categories")
-	private List<Product> products = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "PRODUCT_CATEGORY",
+		joinColumns = @JoinColumn(name = "product_id"),
+		inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> categories = new ArrayList<>();
 	
-	public Category() {}
+	public Product() { }
 	
-	public Category(Integer id, String name) {
+	public Product(Integer id, String name, Double price) {
 		this.id = id;
 		this.name = name;
-	}
-	
-	public Integer getId() {
-		return id;
+		this.price = price;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Integer getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -47,12 +51,20 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public Double getPrice() {
+		return price;
 	}
 
-	protected void setProducts(List<Product> products) {
-		this.products = products;
+	public void setPrice(Double price) {
+		this.price = price;
+	}	
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	protected void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public class Category implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
 }
