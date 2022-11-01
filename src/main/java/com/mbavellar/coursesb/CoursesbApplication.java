@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.mbavellar.coursesb.domain.Address;
 import com.mbavellar.coursesb.domain.Category;
 import com.mbavellar.coursesb.domain.City;
+import com.mbavellar.coursesb.domain.Client;
 import com.mbavellar.coursesb.domain.Product;
 import com.mbavellar.coursesb.domain.State;
+import com.mbavellar.coursesb.domain.enums.ClientType;
+import com.mbavellar.coursesb.repositories.AddressRepository;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
 import com.mbavellar.coursesb.repositories.CityRepository;
+import com.mbavellar.coursesb.repositories.ClientRepository;
 import com.mbavellar.coursesb.repositories.ProductRepository;
 import com.mbavellar.coursesb.repositories.StateRepository;
 
@@ -27,6 +32,11 @@ public class CoursesbApplication implements CommandLineRunner {
 	private StateRepository stateRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CoursesbApplication.class, args);
@@ -64,6 +74,18 @@ public class CoursesbApplication implements CommandLineRunner {
 		
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		
+		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.NATURAL_PERSON);
+		client1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Address address1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", client1, city1);
+		Address address2 = new Address(null, "Ave Matos", "105", "Sala 800", "Centro", "38777012", client1, city2);
+		
+		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+		
+		clientRepository.save(client1);
+		addressRepository.saveAll(Arrays.asList(address1, address2));
+		
 	}
 
 }
