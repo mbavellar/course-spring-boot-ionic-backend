@@ -15,6 +15,7 @@ import com.mbavellar.coursesb.domain.City;
 import com.mbavellar.coursesb.domain.Client;
 import com.mbavellar.coursesb.domain.CreditCardPay;
 import com.mbavellar.coursesb.domain.Order;
+import com.mbavellar.coursesb.domain.OrderItem;
 import com.mbavellar.coursesb.domain.Payment;
 import com.mbavellar.coursesb.domain.Product;
 import com.mbavellar.coursesb.domain.State;
@@ -24,6 +25,7 @@ import com.mbavellar.coursesb.repositories.AddressRepository;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
 import com.mbavellar.coursesb.repositories.CityRepository;
 import com.mbavellar.coursesb.repositories.ClientRepository;
+import com.mbavellar.coursesb.repositories.OrderItemRepository;
 import com.mbavellar.coursesb.repositories.OrderRepository;
 import com.mbavellar.coursesb.repositories.PaymentRepository;
 import com.mbavellar.coursesb.repositories.ProductRepository;
@@ -48,6 +50,8 @@ public class CoursesbApplication implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	
 	public static void main(String[] args) {
@@ -110,6 +114,19 @@ public class CoursesbApplication implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		OrderItem orderItem1 = new OrderItem(order1, p1, 0.00, 1, 2000.0); 
+		OrderItem orderItem2 = new OrderItem(order1, p3, 0.00, 2, 80.0);
+		OrderItem orderItem3 = new OrderItem(order2, p2, 100.00, 1, 800.0);
+		
+		order1.getItems().addAll(Arrays.asList(orderItem1, orderItem2));
+		order2.getItems().add(orderItem3);
+		
+		p1.getItems().add(orderItem1);
+		p2.getItems().add(orderItem3);
+		p3.getItems().add(orderItem2);
+		
+		orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
 	}
 
 }
