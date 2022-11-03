@@ -1,5 +1,6 @@
 package com.mbavellar.coursesb;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mbavellar.coursesb.domain.Address;
+import com.mbavellar.coursesb.domain.BankSlipPay;
 import com.mbavellar.coursesb.domain.Category;
 import com.mbavellar.coursesb.domain.City;
 import com.mbavellar.coursesb.domain.Client;
+import com.mbavellar.coursesb.domain.CreditCardPay;
+import com.mbavellar.coursesb.domain.Order;
+import com.mbavellar.coursesb.domain.Payment;
 import com.mbavellar.coursesb.domain.Product;
 import com.mbavellar.coursesb.domain.State;
 import com.mbavellar.coursesb.domain.enums.ClientType;
+import com.mbavellar.coursesb.domain.enums.PaymentState;
 import com.mbavellar.coursesb.repositories.AddressRepository;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
 import com.mbavellar.coursesb.repositories.CityRepository;
 import com.mbavellar.coursesb.repositories.ClientRepository;
+import com.mbavellar.coursesb.repositories.OrderRepository;
+import com.mbavellar.coursesb.repositories.PaymentRepository;
 import com.mbavellar.coursesb.repositories.ProductRepository;
 import com.mbavellar.coursesb.repositories.StateRepository;
 
@@ -36,6 +44,10 @@ public class CoursesbApplication implements CommandLineRunner {
 	private ClientRepository clientRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	
 	public static void main(String[] args) {
@@ -86,6 +98,18 @@ public class CoursesbApplication implements CommandLineRunner {
 		clientRepository.save(client1);
 		addressRepository.saveAll(Arrays.asList(address1, address2));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Order order1 = new Order(null, sdf.parse("30/09/2022 10:35:13"), client1, address1);
+		Order order2 = new Order(null, sdf.parse("01/11/2022 07:25:03"), client1, address2);
+		
+		Payment pay1 = new CreditCardPay(null, PaymentState.SETTLED, order1, 6);
+		order1.setPayment(pay1);
+		Payment pay2 = new BankSlipPay(null, PaymentState.PENDING, order2, sdf.parse("03/11/2022 23:59:59"), null);
+		order2.setPayment(pay2);
+		client1.getOrders().addAll(Arrays.asList(order1, order2));
+		
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 
 }

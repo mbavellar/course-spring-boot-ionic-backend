@@ -40,6 +40,9 @@ public class Client implements Serializable {
 	@CollectionTable(name = "telephone")
 	private Set<String> phoneNumbers = new HashSet<>();
 	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
 	public Client() { }
 
 	public Client(Integer id, String name, String cpfCnpj, String email, ClientType type) {
@@ -92,6 +95,10 @@ public class Client implements Serializable {
 
 	public Set<String> getPhoneNumbers() {
 		return phoneNumbers;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	@Override
