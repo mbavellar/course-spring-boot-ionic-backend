@@ -28,4 +28,8 @@ public class CategoryService {
 			return categoryRepository.save(obj);
 		throw new IllegalArgumentException("ID must be null for insertions!");
 	}
+	public Category update(Category obj) {
+		findById(obj.getId());
+		return categoryRepository.save(obj);
+	}
 }

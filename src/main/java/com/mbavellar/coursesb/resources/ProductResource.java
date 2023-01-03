@@ -1,5 +1,7 @@
 package com.mbavellar.coursesb.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ public class ProductResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> findAll() {
+	public ResponseEntity<List<Product>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 }
