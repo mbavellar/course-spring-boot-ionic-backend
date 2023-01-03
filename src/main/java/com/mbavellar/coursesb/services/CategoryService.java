@@ -22,4 +22,10 @@ public class CategoryService {
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
+	
+	public Category insert(Category obj) {
+		if (obj != null && obj.getId() == null)
+			return categoryRepository.save(obj);
+		throw new IllegalArgumentException("ID must be null for insertions!");
+	}
 }

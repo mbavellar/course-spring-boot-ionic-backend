@@ -1,6 +1,5 @@
 package com.mbavellar.coursesb.domain;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,8 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mbavellar.coursesb.domain.enums.ClientType;
 
 @Entity
@@ -33,7 +31,7 @@ public class Client implements Serializable {
 	private String cpfCnpj;
 	private Integer type;
 	
-	@JsonManagedReference // Comment it if it causes bugs
+	//@JsonManagedReference // Comment it if it causes bugs with POST
 	@OneToMany(mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -41,7 +39,7 @@ public class Client implements Serializable {
 	@CollectionTable(name = "telephone")
 	private Set<String> phoneNumbers = new HashSet<>();
 	
-	@JsonBackReference // Replaced for JsonIgnore if it crashes. 
+	@JsonIgnore//@JsonBackReference // Replaced for JsonIgnore if it crashes. 
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	

@@ -1,4 +1,4 @@
-	package com.mbavellar.coursesb.domain;
+package com.mbavellar.coursesb.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "`order`")
@@ -33,11 +32,11 @@ public class Order implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date date;
 	
-	@JsonManagedReference // Comment it if it causes bugs
+	//@JsonManagedReference // Comment it if it causes bugs with POST
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
-	@JsonManagedReference // Comment it if it causes bugs
+	//@JsonManagedReference // Comment it if it causes bugs with POST
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
