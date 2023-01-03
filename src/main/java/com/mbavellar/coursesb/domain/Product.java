@@ -31,7 +31,7 @@ public class Product implements Serializable {
 	private String name;
 	private Double price;
 	
-	@JsonBackReference
+	@JsonBackReference //Switch to @JsonIgnore if it causes bugs 
 	@ManyToMany
 	@JoinTable(name = "PRODUCT_CATEGORY",
 		joinColumns = @JoinColumn(name = "product_id"),

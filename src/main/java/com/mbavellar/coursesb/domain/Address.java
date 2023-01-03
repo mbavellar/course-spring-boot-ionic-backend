@@ -26,7 +26,7 @@ public class Address implements Serializable {
 	private String neighborhood;
 	private String postalCode;
 	
-	@JsonBackReference
+	@JsonBackReference // Switch to JsnIgnore if it causes bugs
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;

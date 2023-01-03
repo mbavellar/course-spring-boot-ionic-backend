@@ -1,5 +1,7 @@
 package com.mbavellar.coursesb.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,9 @@ public class ProductService {
 		return productRepository.findById(id).orElseThrow(
 				() -> new ObjectNotFoundException("Object NOT found! Id: " + id +
 						", Tipo: " + Client.class.getName()));
+	}
+
+	public List<Product> findAll() {
+		return productRepository.findAll();
 	}
 }

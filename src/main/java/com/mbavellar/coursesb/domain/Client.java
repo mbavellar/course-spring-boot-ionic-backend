@@ -33,7 +33,7 @@ public class Client implements Serializable {
 	private String cpfCnpj;
 	private Integer type;
 	
-	@JsonManagedReference
+	@JsonManagedReference // Comment it if it causes bugs
 	@OneToMany(mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -41,7 +41,7 @@ public class Client implements Serializable {
 	@CollectionTable(name = "telephone")
 	private Set<String> phoneNumbers = new HashSet<>();
 	
-	@JsonBackReference
+	@JsonBackReference // Replaced for JsonIgnore if it crashes. 
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	

@@ -22,7 +22,7 @@ public class City implements Serializable {
 	private Integer id;
 	private String name;
 	
-	@JsonManagedReference
+	@JsonManagedReference // Comment it if it causes bugs
 	@ManyToOne
 	@JoinColumn(name = "state_id")
 	private State state;

@@ -1,5 +1,7 @@
 package com.mbavellar.coursesb.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class CategoryService {
 			() -> new ObjectNotFoundException("Object not found! Id: " + id + 
 					", Tipo: " + Category.class.getName()));
 	}
-	public Object findAll() {
+	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
 }

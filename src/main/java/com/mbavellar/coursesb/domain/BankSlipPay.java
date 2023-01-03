@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mbavellar.coursesb.domain.enums.PaymentState;
 
 @Entity
@@ -11,7 +12,9 @@ public class BankSlipPay extends Payment {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date dueDate;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date payDate;
 	
 	public BankSlipPay() { }

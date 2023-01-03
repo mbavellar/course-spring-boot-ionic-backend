@@ -21,4 +21,9 @@ public class ProductResource {
 	public ResponseEntity<Product> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> findAll() {
+		return ResponseEntity.ok().body(service.findAll());
+	}
 }

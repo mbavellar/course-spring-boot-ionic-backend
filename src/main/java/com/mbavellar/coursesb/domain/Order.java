@@ -33,11 +33,11 @@ public class Order implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date date;
 	
-	@JsonManagedReference
+	@JsonManagedReference // Comment it if it causes bugs
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
-	@JsonManagedReference
+	@JsonManagedReference // Comment it if it causes bugs
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
