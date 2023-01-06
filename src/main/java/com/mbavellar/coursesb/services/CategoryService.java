@@ -3,10 +3,12 @@ package com.mbavellar.coursesb.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mbavellar.coursesb.domain.Category;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
+import com.mbavellar.coursesb.services.exceptions.DataIntegrityException;
 import com.mbavellar.coursesb.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -31,5 +33,12 @@ public class CategoryService {
 	public Category update(Category obj) {
 		findById(obj.getId());
 		return categoryRepository.save(obj);
+	}
+	public void deleteById(Integer id) {
+		try {
+		categoryRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Cannot remove Category which has products!");
+		}
 	}
 }
