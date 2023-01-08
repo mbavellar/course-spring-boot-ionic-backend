@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mbavellar.coursesb.domain.Category;
+import com.mbavellar.coursesb.dto.CategoryDTO;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
 import com.mbavellar.coursesb.services.exceptions.DataIntegrityException;
 import com.mbavellar.coursesb.services.exceptions.ObjectNotFoundException;
@@ -21,8 +22,8 @@ public class CategoryService {
 			() -> new ObjectNotFoundException("Object not found! Id: " + id + 
 					", Tipo: " + Category.class.getName()));
 	}
-	public List<Category> findAll() {
-		return categoryRepository.findAll();
+	public List<CategoryDTO> findAll() {
+		return categoryRepository.findAll().stream().map(obj -> new CategoryDTO(obj)).toList();
 	}
 	
 	public Category insert(Category obj) {

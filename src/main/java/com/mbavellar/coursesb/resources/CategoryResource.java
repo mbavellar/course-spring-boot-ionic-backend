@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mbavellar.coursesb.domain.Category;
+import com.mbavellar.coursesb.dto.CategoryDTO;
 import com.mbavellar.coursesb.services.CategoryService;
 
 @RestController
@@ -29,7 +30,7 @@ public class CategoryResource {
   }
   
   @RequestMapping(method = RequestMethod.GET)
-  public ResponseEntity<List<Category>> findAll() {
+  public ResponseEntity<List<CategoryDTO>> findAll() {
 	  return ResponseEntity.ok().body(categoryService.findAll());
   }
   
