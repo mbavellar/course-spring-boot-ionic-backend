@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mbavellar.coursesb.domain.Category;
 import com.mbavellar.coursesb.dto.CategoryDTO;
+import com.mbavellar.coursesb.enums.OrderBy;
 import com.mbavellar.coursesb.repositories.CategoryRepository;
 import com.mbavellar.coursesb.services.exceptions.DataIntegrityException;
 import com.mbavellar.coursesb.services.exceptions.ObjectNotFoundException;
@@ -41,5 +45,10 @@ public class CategoryService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Cannot remove Category which has products!");
 		}
+	}
+	
+	public Page<Category> findAllPaged(Integer page, Integer linesPerPage, OrderBy orderBy, Direction direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, direction, orderBy.getValue());
+		return categoryRepository.findAll(pageRequest);
 	}
 }
